@@ -1,0 +1,31 @@
+name: Deploy SPA to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # or the branch you want to deploy from
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16" # or the version you need
+
+      - name: Install dependencies
+        run: npm install # if you have dependencies
+
+      - name: Build SPA
+        run: npm run build # or your build command
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build # adjust this to the directory where your build files are
